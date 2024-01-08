@@ -1,5 +1,6 @@
 // controllers/userController.js
 const User = require('../models/userModel');
+const sequelize = require('../dbConfig');
 
 // Create a new user
 exports.createUser = async (req, res) => {
