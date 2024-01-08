@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const eventRoutes = require('./api/routes/eventRoutes'); // Import your event routes
 
+const db = require('./dbConfig');
+
 const app = express();
 const port = process.env.PORT || 3000;
 

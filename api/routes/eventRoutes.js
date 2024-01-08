@@ -4,6 +4,9 @@ const eventController = require('../controllers/eventController');
 
 const router = express.Router();
 
+// Search for events by event name (place this route before the generic route)
+router.get('/search', eventController.searchEventsByName);
+
 // Define routes for event-related operations
 router.post('/', eventController.createEvent);
 router.get('/', eventController.getEvents);

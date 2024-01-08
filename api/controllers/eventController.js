@@ -1,32 +1,64 @@
-// controllers/eventController.js
-const Event = require('../models/eventModel'); // Import the Event model
+const Event = require('../models/eventModel');
 
-// Controller methods for event-related operations
-const createEvent = (req, res) => {
-  // Implement logic to create a new event
+// Create a new event
+exports.createEvent = (req, res) => {
+  const newEvent = new Event(req.body);
+  if (!newEvent.event_name || !newEvent.event_date) {
+    return res.status(400).json({ error: 'Event name and date are required fields' });
+  }
+
+  newEvent.save((err, event) => {
+    if (err) {
+      res.status(400).send(err);
+    } else {
+      res.status(201).json(event);
+    }
+  });
 };
 
-const getEvents = (req, res) => {
-  // Implement logic to retrieve a list of events
+// Update an existing event
+exports.updateEvent = (req, res) => {
+  Event.findByIdAndUpdate(req.params.eventId, req.body, { new: true }, (err, event) => {
+    if (err) {
+      res.status(400).send(err);
+    } else {
+      res.status(200).json(event);
+    }
+  });
 };
 
-const getEventById = (req, res) => {
-  // Implement logic to retrieve a specific event by ID
+// Delete an event
+exports.deleteEvent = (req, res) => {
+  Event.findByIdAndRemove(req.params.eventId, (err, event) => {
+    if (err) {
+      res.status(400).send(err);
+    } else {
+      res.status(204).send();
+    }
+  });
 };
 
-const updateEvent = (req, res) => {
-  // Implement logic to update an event
+// Get a list of all events
+exports.getAllEvents = (req, res) => {
+  Event.find({}, (err, events) => {
+    if (err) {
+      res.status(400).send(err);
+    } else {
+      res.status(200).json(events);
+    }
+  });
 };
 
-const deleteEvent = (req, res) => {
-  // Implement logic to delete an event
+exports.searchEventsByName = (req, res) => {
+  const { eventName } = req.query;
+
+  Event.find({ event_name: eventName }, (err, events) => {
+    if (err) {
+      res.status(400).send(err);
+    } else {
+      res.status(200).json(events);
+    }
+  });
 };
 
-// Export controller methods
-module.exports = {
-  createEvent,
-  getEvents,
-  getEventById,
-  updateEvent,
-  deleteEvent,
-};
+// Implement other controller functions as needed
