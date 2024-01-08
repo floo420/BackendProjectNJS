@@ -2,7 +2,7 @@ const request = require('supertest');
 const app = require('../index'); // Replace with the correct path to your Express app
 const chai = require('chai');
 const expect = chai.expect;
-const pool = require('../dbConfig'); // Replace with the correct path to your MySQL connection pool
+const pool = require('./dbConfig'); // Replace with the correct path to your MySQL connection pool
 
 describe('Event Controller', () => {
   // Run before all tests to set up the test environment
