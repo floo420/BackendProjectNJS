@@ -1,16 +1,24 @@
-const mongoose = require('mongoose');
+// models/eventModel.js
+const { DataTypes } = require('sequelize');
+const sequelize = require('../dbConfig'); // Replace with your MySQL connection
 
-const eventSchema = new mongoose.Schema({
+const Event = sequelize.define('Event', {
   event_name: {
-    type: String,
-    required: true,
+    type: DataTypes.STRING,
+    allowNull: false,
   },
   event_date: {
-    type: Date,
-    required: true,
+    type: DataTypes.DATE,
+    allowNull: false,
   },
-  event_location: String,
-  event_description: String,
+  event_location: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  event_description: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
 });
 
-module.exports = mongoose.model('Event', eventSchema);
+module.exports = Event;

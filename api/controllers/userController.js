@@ -1,69 +1,83 @@
-// userController.js
-
+// controllers/userController.js
 const User = require('../models/userModel');
 
 // Create a new user
-exports.createUser = (req, res) => {
-  const newUser = new User(req.body);
-
-  // Basic validation example
-  if (!newUser.first_name || !newUser.last_name || !newUser.email) {
-    return res.status(400).json({ error: 'First name, last name, and email are required fields' });
+exports.createUser = async (req, res) => {
+  try {
+    const newUser = await User.create(req.body);
+    res.status(201).json(newUser);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
   }
-
-  newUser.save((err, user) => {
-    if (err) {
-      res.status(400).send(err);
-    } else {
-      res.status(201).json(user);
-    }
-  });
 };
 
-// Update an existing user by ID
-exports.updateUser = (req, res) => {
-  User.findByIdAndUpdate(req.params.userId, req.body, { new: true }, (err, user) => {
-    if (err) {
-      res.status(400).send(err);
-    } else {
-      res.status(200).json(user);
+// Update an existing user
+exports.updateUser = async (req, res) => {
+  const { userId } = req.params;
+  try {
+    const user = await User.findByPk(userId);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
     }
-  });
+    await user.update(req.body);
+    res.status(200).json(user);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
 };
 
-// Delete a user by ID
-exports.deleteUser = (req, res) => {
-  User.findByIdAndRemove(req.params.userId, (err, user) => {
-    if (err) {
-      res.status(400).send(err);
-    } else {
-      res.status(204).send();
+// Delete a user
+exports.deleteUser = async (req, res) => {
+  const { userId } = req.params;
+  try {
+    const user = await User.findByPk(userId);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
     }
-  });
+    await user.destroy();
+    res.status(204).send();
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
 };
 
 // Get a list of all users
-exports.getAllUsers = (req, res) => {
-  User.find({}, (err, users) => {
-    if (err) {
-      res.status(400).send(err);
-    } else {
-      res.status(200).json(users);
-    }
-  });
+exports.getAllUsers = async (req, res) => {
+  try {
+    const users = await User.findAll();
+    res.status(200).json(users);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
 };
 
 // Search for users by first name
-exports.searchUsersByFirstName = (req, res) => {
+exports.searchUsersByFirstName = async (req, res) => {
   const { firstName } = req.query;
+  try {
+    const users = await User.findAll({
+      where: {
+        first_name: firstName,
+      },
+    });
+    res.status(200).json(users);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
 
-  User.find({ first_name: firstName }, (err, users) => {
-    if (err) {
-      res.status(400).send(err);
-    } else {
-      res.status(200).json(users);
+// Get user by ID
+exports.getUserById = async (req, res) => {
+  const { userId } = req.params;
+  try {
+    const user = await User.findByPk(userId);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
     }
-  });
+    res.status(200).json(user);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
 };
 
 // Implement other controller functions as needed

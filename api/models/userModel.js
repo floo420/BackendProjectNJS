@@ -1,27 +1,31 @@
-const mongoose = require('mongoose');
+// models/userModel.js
+const { DataTypes } = require('sequelize');
+const sequelize = require('../dbConfig'); 
 
-const userSchema = new mongoose.Schema({
+const User = sequelize.define('User', {
   first_name: {
-    type: String,
-    required: true,
+    type: DataTypes.STRING,
+    allowNull: false,
   },
   last_name: {
-    type: String,
-    required: true,
+    type: DataTypes.STRING,
+    allowNull: false,
   },
   email: {
-    type: String,
-    required: true,
+    type: DataTypes.STRING,
+    allowNull: false,
     unique: true,
-    match: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+    validate: {
+      isEmail: true, // Validate email format
+    },
   },
   age: {
-    type: Number,
-    min: 18,
+    type: DataTypes.INTEGER,
+    validate: {
+      min: 18, // Validate age as a minimum of 18
+    },
   },
   // Define other fields as needed
 });
-
-module.exports = mongoose.model('User', userSchema);
 
 module.exports = User;

@@ -1,64 +1,68 @@
+// controllers/eventController.js
 const Event = require('../models/eventModel');
 
 // Create a new event
-exports.createEvent = (req, res) => {
-  const newEvent = new Event(req.body);
-  if (!newEvent.event_name || !newEvent.event_date) {
-    return res.status(400).json({ error: 'Event name and date are required fields' });
+exports.createEvent = async (req, res) => {
+  try {
+    const newEvent = await Event.create(req.body);
+    res.status(201).json(newEvent);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
   }
-
-  newEvent.save((err, event) => {
-    if (err) {
-      res.status(400).send(err);
-    } else {
-      res.status(201).json(event);
-    }
-  });
 };
 
 // Update an existing event
-exports.updateEvent = (req, res) => {
-  Event.findByIdAndUpdate(req.params.eventId, req.body, { new: true }, (err, event) => {
-    if (err) {
-      res.status(400).send(err);
-    } else {
-      res.status(200).json(event);
+exports.updateEvent = async (req, res) => {
+  const { eventId } = req.params;
+  try {
+    const event = await Event.findByPk(eventId);
+    if (!event) {
+      return res.status(404).json({ error: 'Event not found' });
     }
-  });
+    await event.update(req.body);
+    res.status(200).json(event);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
 };
 
 // Delete an event
-exports.deleteEvent = (req, res) => {
-  Event.findByIdAndRemove(req.params.eventId, (err, event) => {
-    if (err) {
-      res.status(400).send(err);
-    } else {
-      res.status(204).send();
+exports.deleteEvent = async (req, res) => {
+  const { eventId } = req.params;
+  try {
+    const event = await Event.findByPk(eventId);
+    if (!event) {
+      return res.status(404).json({ error: 'Event not found' });
     }
-  });
+    await event.destroy();
+    res.status(204).send();
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
 };
 
 // Get a list of all events
-exports.getAllEvents = (req, res) => {
-  Event.find({}, (err, events) => {
-    if (err) {
-      res.status(400).send(err);
-    } else {
-      res.status(200).json(events);
-    }
-  });
+exports.getAllEvents = async (req, res) => {
+  try {
+    const events = await Event.findAll();
+    res.status(200).json(events);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
 };
 
-exports.searchEventsByName = (req, res) => {
+exports.searchEventsByName = async (req, res) => {
   const { eventName } = req.query;
-
-  Event.find({ event_name: eventName }, (err, events) => {
-    if (err) {
-      res.status(400).send(err);
-    } else {
-      res.status(200).json(events);
-    }
-  });
+  try {
+    const events = await Event.findAll({
+      where: {
+        event_name: eventName,
+      },
+    });
+    res.status(200).json(events);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
 };
 
 // Implement other controller functions as needed

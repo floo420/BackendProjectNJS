@@ -9,7 +9,7 @@ router.get('/search', eventController.searchEventsByName);
 
 // Define routes for event-related operations
 router.post('/', eventController.createEvent);
-router.get('/', eventController.getEvents);
+router.get('/', eventController.getAllEvents);
 router.get('/:eventId', eventController.getEventById);
 router.put('/:eventId', eventController.updateEvent);
 router.delete('/:eventId', eventController.deleteEvent);
