@@ -1,6 +1,8 @@
 // routes/userRoutes.js
 const express = require('express');
 const userController = require('../controllers/userController');
+const pool = require('../../dbConfig'); 
+
 
 const router = express.Router();
 

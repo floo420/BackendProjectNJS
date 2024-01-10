@@ -13,19 +13,10 @@ app.use(express.static('public'));
 app.use(bodyParser.json());
 
 // MySQL database configuration
-const mysql = require('mysql');
+const mysql = require('mysql/promise');
 const dbConfig = require('./dbConfig'); // Make sure dbConfig.js contains your MySQL connection configuration
 
-const connection = mysql.createConnection(dbConfig);
-
-// Connect to MySQL
-connection.connect((err) => {
-  if (err) {
-    console.error('Error connecting to MySQL database:', err);
-    return;
-  }
-  console.log('Connected to MySQL database');
-});
+const pool = mysql.createPool(dbConfig);
 
 // Use your event routes
 app.use('/events', eventRoutes);

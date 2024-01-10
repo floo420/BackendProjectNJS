@@ -1,5 +1,7 @@
 // controllers/eventController.js
-const { sequelize, Event } = require('../../dbConfig');
+const User = require('../models/evetModel');
+
+const pool = require('../../dbConfig');
 
 // Create a new event
 exports.createEvent = async (req, res) => {

@@ -1,41 +1,25 @@
-module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define('User', {
-    user_id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
-    },
-    first_name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    last_name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true,
-      validate: {
-        isEmail: true, // Validate email format
-      },
-    },
-    phone_number: {
-      type: DataTypes.STRING, // You can change this to the appropriate data type
-    },
-    birthdate: {
-      type: DataTypes.DATE, // You can change this to the appropriate data type
-    },
-    created_at: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
-    },
-    updated_at: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
-    },
-  });
-
-  return User;
+// user.js
+const User = {
+  createUser: async (connection, user) => {
+    try {
+      const [results] = await connection.execute(
+        'INSERT INTO users (first_name, last_name, email, phone_number, birthdate) VALUES (?, ?, ?, ?, ?)',
+        [user.first_name, user.last_name, user.email, user.phone_number, user.birthdate]
+      );
+      return results.insertId; // Return the ID of the newly created user
+    } catch (error) {
+      throw error;
+    }
+  },
+  getUserById: async (connection, userId) => {
+    try {
+      const [results] = await connection.execute('SELECT * FROM users WHERE user_id = ?', [userId]);
+      return results[0]; // Return the user data
+    } catch (error) {
+      throw error;
+    }
+  },
+  // Add other methods for updating, deleting, and querying users
 };
+
+module.exports = User;

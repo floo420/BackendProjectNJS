@@ -1,22 +1,16 @@
-const mysql = require('mysql2');
+const mysql = require('mysql2/promise');
 
 // Create a connection to the MySQL server
-const connection = mysql.createConnection({
+const pool = mysql.createConnection({
   host: '127.0.0.1', 
   user: 'root',      
   password: 'root',  
   database: 'BackendProjectNodeJS', 
-  port: '8889'      
+  port: '8889',
+  connectionLimit: 10,
 });
 
-// Connect to MySQL
-connection.connect((err) => {
-  if (err) {
-    console.error('Error connecting to MySQL:', err);
-    return;
-  }
-  console.log('Connected to MySQL');
-});
+module.exports = pool;
 
 // Close the MySQL connection when done
 // connection.end();

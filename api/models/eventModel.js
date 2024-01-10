@@ -1,33 +1,25 @@
-module.exports = (sequelize, DataTypes) => {
-  const Event = sequelize.define('Event', {
-    event_id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
-    },
-    event_name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    event_date: {
-      type: DataTypes.DATE,
-      allowNull: false,
-    },
-    event_location: {
-      type: DataTypes.STRING,
-    },
-    event_description: {
-      type: DataTypes.STRING,
-    },
-    created_at: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
-    },
-    updated_at: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
-    },
-  });
 
-  return Event;
+const Event = {
+  createEvent: async (connection, event) => {
+    try {
+      const [results] = await connection.execute(
+        'INSERT INTO events (event_name, event_date, event_location, event_description) VALUES (?, ?, ?, ?)',
+        [event.event_name, event.event_date, event.event_location, event.event_description]
+      );
+      return results.insertId; // Return the ID of the newly created event
+    } catch (error) {
+      throw error;
+    }
+  },
+  getEventById: async (connection, eventId) => {
+    try {
+      const [results] = await connection.execute('SELECT * FROM events WHERE event_id = ?', [eventId]);
+      return results[0]; // Return the event data
+    } catch (error) {
+      throw error;
+    }
+  },
+  // Add other methods for updating, deleting, and querying events
 };
+
+module.exports = Event;
