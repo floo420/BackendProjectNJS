@@ -1,12 +1,17 @@
 // test/eventController.test.js
 const request = require('supertest');
 const app = require('../index'); // Replace with the correct path to your Express app
-const chai = require('chai');
-const expect = chai.expect;
 const { sequelize, Event } = require('../../dbConfig');
+
+let chai;
+let expect;
 
 describe('Event Controller', () => {
   before(async () => {
+    // Dynamic import for chai
+    chai = await import('chai');
+    expect = chai.expect;
+
     // Sync the database to create the Event table
     await sequelize.sync();
   });
@@ -38,5 +43,4 @@ describe('Event Controller', () => {
   });
 
   // Add more test cases as needed
-
 });
