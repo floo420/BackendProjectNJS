@@ -9,7 +9,6 @@ app.get('/', (req, res) => {
   res.send('Welcome to the Backend Project API!');
 });
 
-
 // Middleware
 app.use(bodyParser.json());
 
