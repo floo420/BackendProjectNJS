@@ -1,6 +1,5 @@
 // controllers/eventController.js
 const { sequelize, Event } = require('./dbConfig');
-const Event = require('../models/eventModel');
 
 // Create a new event
 exports.createEvent = async (req, res) => {
