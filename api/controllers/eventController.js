@@ -63,6 +63,19 @@ exports.searchEventsByName = async (req, res) => {
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
+
+  exports.getEventById = async (req, res) => {
+    try {
+      const eventId = req.params.eventId;
+      const event = await Event.findByPk(eventId);
+      if (!event) {
+        return res.status(404).json({ message: 'Event not found' });
+      }
+      res.json(event);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  };
 };
 
 // Implement other controller functions as needed
