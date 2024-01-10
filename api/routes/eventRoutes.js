@@ -1,6 +1,7 @@
 // routes/eventRoutes.js
 const express = require('express');
 const eventController = require('../controllers/eventController');
+const { sequelize, Event } = require('../controllers/dbConfig'); // Import sequelize and Event objects
 
 const router = express.Router();
 
