@@ -5,6 +5,11 @@ const eventRoutes = require('./api/routes/eventRoutes');
 const app = express();
 const port = process.env.PORT || 3000;
 
+app.get('/', (req, res) => {
+  res.send('Welcome to the Backend Project API!');
+});
+
+
 // Middleware
 app.use(bodyParser.json());
 
