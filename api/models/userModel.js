@@ -1,11 +1,10 @@
-// models/userModel.js
-const { DataTypes } = require('sequelize');
-const sequelize = require('../../dbConfig'); 
-
-// models/userModel.js
-
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
+    user_id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
     first_name: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -22,13 +21,20 @@ module.exports = (sequelize, DataTypes) => {
         isEmail: true, // Validate email format
       },
     },
-    age: {
-      type: DataTypes.INTEGER,
-      validate: {
-        min: 18, // Validate age as a minimum of 18
-      },
+    phone_number: {
+      type: DataTypes.STRING, // You can change this to the appropriate data type
     },
-    // Define other fields as needed
+    birthdate: {
+      type: DataTypes.DATE, // You can change this to the appropriate data type
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
+    },
   });
 
   return User;

@@ -1,11 +1,10 @@
-// models/eventModel.js
-const { DataTypes } = require('sequelize');
-const sequelize = require('../../dbConfig'); 
-
-// models/eventModel.js
-
 module.exports = (sequelize, DataTypes) => {
   const Event = sequelize.define('Event', {
+    event_id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
     event_name: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -16,14 +15,19 @@ module.exports = (sequelize, DataTypes) => {
     },
     event_location: {
       type: DataTypes.STRING,
-      allowNull: true,
     },
     event_description: {
       type: DataTypes.STRING,
-      allowNull: true,
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
     },
   });
 
   return Event;
 };
-
