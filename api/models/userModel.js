@@ -1,6 +1,6 @@
 // models/userModel.js
 const { DataTypes } = require('sequelize');
-const sequelize = require('../../dbConfig'); 
+const sequelize = require('../dbConfig'); 
 
 // models/userModel.js
 

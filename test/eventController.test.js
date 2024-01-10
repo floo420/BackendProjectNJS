@@ -1,7 +1,7 @@
 // test/eventController.test.js
 const request = require('supertest');
 const app = require('../index'); // Replace with the correct path to your Express app
-const { sequelize, Event } = require('../../dbConfig');
+const { sequelize, Event } = require('../dbConfig');
 
 let chai;
 let expect;
