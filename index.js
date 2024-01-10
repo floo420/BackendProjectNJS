@@ -10,7 +10,7 @@ app.use(bodyParser.json());
 
 // MySQL database configuration
 const mysql = require('mysql');
-const dbConfig = require('./dbConfig'); // Make sure dbConfig.js contains your MySQL connection configuration
+const dbConfig = require('../dbConfig'); // Make sure dbConfig.js contains your MySQL connection configuration
 
 const connection = mysql.createConnection(dbConfig);
 
