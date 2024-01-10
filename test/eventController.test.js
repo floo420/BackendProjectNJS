@@ -3,7 +3,7 @@ const request = require('supertest');
 const app = require('../index'); // Replace with the correct path to your Express app
 const chai = require('chai');
 const expect = chai.expect;
-const { sequelize, Event } = require('../dbConfig');
+const { sequelize, Event } = require('../../dbConfig');
 
 describe('Event Controller', () => {
   before(async () => {
