@@ -8,6 +8,76 @@ document.addEventListener("DOMContentLoaded", () => {
     const getAllUsersButton = document.getElementById("getAllUsersButton");
     const getAllEventsButton = document.getElementById("getAllEventsButton");
 
+    const userList = document.getElementById("userList");
+    const eventList = document.getElementById("eventList");
+
+    const createUserForm = document.getElementById("createUserForm");
+    createUserForm.addEventListener("submit", async (e) => {
+        e.preventDefault(); // Prevent default form submission behavior
+
+        try {
+            const formData = new FormData(createUserForm);
+            const response = await fetch("/users", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    first_name: formData.get("first_name"),
+                    last_name: formData.get("last_name"),
+                    email: formData.get("email"),
+                    phone_number: formData.get("phone_number"),
+                    birthdate: formData.get("birthdate"),
+                }),
+            });
+
+            if (response.status === 201) {
+                console.log("User created successfully!");
+                createUserForm.reset(); // Clear the form
+                fetchUsers(); // Refresh user list
+            } else {
+                const data = await response.json();
+                console.error("Error creating user:", data.error);
+            }
+        } catch (error) {
+            console.error("An error occurred:", error);
+        }
+    });
+
+    // Add event listener for creating a new event
+    const createEventForm = document.getElementById("createEventForm");
+    createEventForm.addEventListener("submit", async (e) => {
+        e.preventDefault(); // Prevent default form submission behavior
+
+        try {
+            const formData = new FormData(createEventForm);
+            const response = await fetch("/events", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    event_name: formData.get("event_name"),
+                    event_date: formData.get("event_date"),
+                    event_location: formData.get("event_location"),
+                    event_description: formData.get("event_description"),
+                }),
+            });
+
+            if (response.status === 201) {
+                console.log("Event created successfully!");
+                createEventForm.reset(); // Clear the form
+                fetchEvents(); // Refresh event list
+            } else {
+                const data = await response.json();
+                console.error("Error creating event:", data.error);
+            }
+        } catch (error) {
+            console.error("An error occurred:", error);
+        }
+    });
+
+
     // Add event listener for creating a new user
     createUserButton.addEventListener("click", async () => {
         try {
