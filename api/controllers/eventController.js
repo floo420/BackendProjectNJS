@@ -1,6 +1,5 @@
 // controllers/eventController.js
 const Event = require('../models/eventModel');
-
 const pool = require('../../dbConfig');
 
 // Create a new event

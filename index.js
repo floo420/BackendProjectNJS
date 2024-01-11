@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const eventRoutes = require('./api/routes/eventRoutes');
+const userRoutes = require('./api/routes/userRoutes');
 const mysql = require('mysql2/promise'); 
 const dbConfig = require('./dbConfig'); 
 
