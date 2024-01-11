@@ -42,11 +42,11 @@ app.post('/createUser', async (req, res) => {
   try {
       // Perform API action to create a new user with pre-configured data
       const newUserId = await User.createUser(pool, {
-          first_name: "John",
-          last_name: "Doe",
-          email: "johndoe@example.com",
+          first_name: "florian",
+          last_name: "brasseur",
+          email: "florian@gmail.com",
           phone_number: "123-456-7890",
-          birthdate: "1990-01-01"
+          birthdate: "2003-07-28"
       });
       const newUser = await User.getUserById(pool, newUserId);
       res.status(201).json(newUser);
