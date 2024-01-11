@@ -6,7 +6,8 @@ const pool = require('../../dbConfig');
 // Create a new event
 exports.createEvent = async (req, res) => {
   try {
-    const newEvent = await Event.create(req.body);
+    const newEventId = await Event.createEvent(pool, req.body);
+    const newEvent = await Event.getEventById(pool, newEventId);
     res.status(201).json(newEvent);
   } catch (err) {
     res.status(400).json({ error: err.message });
