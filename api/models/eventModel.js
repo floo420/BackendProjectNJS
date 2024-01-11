@@ -19,6 +19,15 @@ const Event = {
       throw error;
     }
   },
+
+  getAllEvents: async (pool) => {
+    try {
+      const [results] = await pool.query('SELECT * FROM events');
+      return results; // Return all events
+    } catch (error) {
+      throw error;
+    }
+  },
   // Add other methods for updating, deleting, and querying events
 };
 
