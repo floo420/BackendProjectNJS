@@ -76,7 +76,36 @@ document.addEventListener("DOMContentLoaded", () => {
             console.error("An error occurred:", error);
         }
     });
+    // Fetch and display users and events
+    const fetchUsers = async () => {
+        try {
+            const response = await fetch("/users");
+            const users = await response.json();
+            userList.innerHTML = "";
+            users.forEach((user) => {
+                const listItem = createUserListItem(user);
+                userList.appendChild(listItem);
+            });
+        } catch (error) {
+            console.error("Error fetching users:", error);
+        }
+    };
 
+    const fetchEvents = async () => {
+        try {
+            const response = await fetch("/events");
+            const events = await response.json();
+            eventList.innerHTML = "";
+            events.forEach((event) => {
+                const listItem = createEventListItem(event);
+                eventList.appendChild(listItem);
+            });
+        } catch (error) {
+            console.error("Error fetching events:", error);
+        }
+    };
+    fetchUsers();
+    fetchEvents();
 
     // Add event listener for creating a new user
     createUserButton.addEventListener("click", async () => {
@@ -223,31 +252,6 @@ document.addEventListener("DOMContentLoaded", () => {
             console.error("An error occurred:", error);
         }
     });
-    
-    deleteEventButton.addEventListener("click", async () => {
-        // Assuming you have a form with id "deleteEventForm" for deleting events
-        const deleteEventForm = document.getElementById("deleteEventForm");
-    
-        try {
-            // Extract data from the form
-            const formData = new FormData(deleteEventForm);
-            const eventId = formData.get("event_id"); // Assuming you have a field with event ID
-    
-            // Make a fetch request to delete the event
-            const response = await fetch(`/events/${eventId}`, {
-                method: "DELETE",
-            });
-    
-            if (response.status === 204) {
-                console.log("Event deleted successfully!");
-            } else {
-                const data = await response.json();
-                console.error("Error deleting event:", data.error);
-            }
-        } catch (error) {
-            console.error("An error occurred:", error);
-        }
-    });
 
     const createUserListItem = (user) => {
         const listItem = document.createElement("li");
@@ -288,36 +292,6 @@ document.addEventListener("DOMContentLoaded", () => {
         return listItem;
     };
 
-    // Fetch and display users and events
-    const fetchUsers = async () => {
-        try {
-            const response = await fetch("/users");
-            const users = await response.json();
-            userList.innerHTML = "";
-            users.forEach((user) => {
-                const listItem = createUserListItem(user);
-                userList.appendChild(listItem);
-            });
-        } catch (error) {
-            console.error("Error fetching users:", error);
-        }
-    };
-
-    const fetchEvents = async () => {
-        try {
-            const response = await fetch("/events");
-            const events = await response.json();
-            eventList.innerHTML = "";
-            events.forEach((event) => {
-                const listItem = createEventListItem(event);
-                eventList.appendChild(listItem);
-            });
-        } catch (error) {
-            console.error("Error fetching events:", error);
-        }
-    };
-    fetchUsers();
-    fetchEvents();
 
     const updateUser = async (userId) => {
         try {
@@ -416,5 +390,29 @@ document.addEventListener("DOMContentLoaded", () => {
             console.error("An error occurred:", error);
         }
     }
+    deleteEventButton.addEventListener("click", async () => {
+        // Assuming you have a form with id "deleteEventForm" for deleting events
+        const deleteEventForm = document.getElementById("deleteEventForm");
+    
+        try {
+            // Extract data from the form
+            const formData = new FormData(deleteEventForm);
+            const eventId = formData.get("event_id"); // Assuming you have a field with event ID
+    
+            // Make a fetch request to delete the event
+            const response = await fetch(`/events/${eventId}`, {
+                method: "DELETE",
+            });
+    
+            if (response.status === 204) {
+                console.log("Event deleted successfully!");
+            } else {
+                const data = await response.json();
+                console.error("Error deleting event:", data.error);
+            }
+        } catch (error) {
+            console.error("An error occurred:", error);
+        }
+    });
 
 });
