@@ -1,5 +1,5 @@
 // controllers/eventController.js
-const User = require('../models/evetModel');
+const Event = require('../models/eventModel');
 
 const pool = require('../../dbConfig');
 

@@ -13,7 +13,7 @@ app.use(express.static('public'));
 app.use(bodyParser.json());
 
 // MySQL database configuration
-const mysql = require('mysql/promise');
+const mysql = require('mysql2/promise');
 const dbConfig = require('./dbConfig'); // Make sure dbConfig.js contains your MySQL connection configuration
 
 const pool = mysql.createPool(dbConfig);
