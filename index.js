@@ -17,8 +17,8 @@ app.use(express.static('public'));
 // Parse JSON data in request bodies
 app.use(bodyParser.json());
 
-// Import and use your event routes
 app.use('/events', eventRoutes);
+app.use('/users', userRoutes);
 
 // Handle button click to create an event
 app.post('/createEvent', async (req, res) => {
@@ -35,6 +35,23 @@ app.post('/createEvent', async (req, res) => {
     } catch (err) {
         res.status(400).json({ error: err.message });
     }
+});
+
+app.post('/createUser', async (req, res) => {
+  try {
+      // Perform API action to create a new user with pre-configured data
+      const newUserId = await User.createUser(pool, {
+          first_name: "John",
+          last_name: "Doe",
+          email: "johndoe@example.com",
+          phone_number: "123-456-7890",
+          birthdate: "1990-01-01"
+      });
+      const newUser = await User.getUserById(pool, newUserId);
+      res.status(201).json(newUser);
+  } catch (err) {
+      res.status(400).json({ error: err.message });
+  }
 });
 
 // Start the server
