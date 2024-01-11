@@ -6,7 +6,7 @@ const pool = require('../../dbConfig');
 exports.createUser = async (req, res) => {
   try {
     const newUserId = await User.createUser(pool, req.body);
-    const newUser = await Event.getUserById(pool, newEventId);
+    const newUser = await User.getUserById(pool, newUserId);
     res.status(201).json(newUser);
   } catch (err) {
     res.status(400).json({ error: err.message });
