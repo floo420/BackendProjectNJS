@@ -47,7 +47,7 @@ exports.deleteEvent = async (req, res) => {
 // Get a list of all events
 exports.getAllEvents = async (req, res) => {
   try {
-    const events = await Event.getAllEvents();
+    const events = await Event.getAllEvents(pool);
     res.status(200).json(events);
   } catch (err) {
     res.status(400).json({ error: err.message });
