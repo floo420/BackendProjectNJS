@@ -30,7 +30,28 @@ const User = {
       throw error;
     }
   },
-  // Add other methods for updating, deleting, and querying users
+
+  updateUser: async (pool, userId, updatedData) => {
+    try {
+      const {
+        first_name,
+        last_name,
+        email,
+        phone_number,
+        birthdate
+      } = updatedData;
+
+      await pool.query(
+        'UPDATE users SET first_name = ?, last_name = ?, email = ?, phone_number = ?, birthdate = ? WHERE user_id = ?',
+        [first_name, last_name, email, phone_number, birthdate, userId]
+      );
+
+      return true; // Return true if the update was successful
+    } catch (error) {
+      throw error;
+    }
+  },
+
 };
 
 module.exports = User;
