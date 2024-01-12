@@ -17,11 +17,12 @@ exports.createUser = async (req, res) => {
 exports.updateUser = async (req, res) => {
   const { userId } = req.params;
   try {
-    const user = await User.findByPk(userId);
+    const user = await User.getUserById(pool, userId); 
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
-    await user.update(req.body);
+    await User.updateUser(pool, userId, req.body); 
+    const updatedUser = await User.getUserById(pool, userId); 
     res.status(200).json(user);
   } catch (err) {
     res.status(400).json({ error: err.message });
@@ -32,11 +33,11 @@ exports.updateUser = async (req, res) => {
 exports.deleteUser = async (req, res) => {
   const { userId } = req.params;
   try {
-    const user = await User.findByPk(userId);
+    const user = await User.getUserById(pool, userId); 
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
-    await user.destroy();
+    await User.deleteUser(pool, userId); 
     res.status(204).send();
   } catch (err) {
     res.status(400).json({ error: err.message });
@@ -46,7 +47,7 @@ exports.deleteUser = async (req, res) => {
 // Get a list of all users
 exports.getAllUsers = async (req, res) => {
   try {
-    const users = await User.getAllUsers();
+    const users = await User.getAllUsers(pool);
     res.status(200).json(users);
   } catch (err) {
     res.status(400).json({ error: err.message });
@@ -57,12 +58,9 @@ exports.getAllUsers = async (req, res) => {
 exports.searchUsersByFirstName = async (req, res) => {
   const { firstName } = req.query;
   try {
-    const users = await User.getAllUsers({
-      where: {
-        first_name: firstName,
-      },
-    });
-    res.status(200).json(users);
+    const users = await User.getAllUsers(pool); // Use getAllUsers to fetch all users
+    const filteredUsers = users.filter(user => user.first_name === firstName);
+    res.status(200).json(filteredUsers);
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
