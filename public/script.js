@@ -3,6 +3,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const createEventForm = document.getElementById("createEventForm");
     const getAllUsersButton = document.getElementById("getAllUsersButton");
     const getAllEventsButton = document.getElementById("getAllEventsButton");
+    const updateUserContainer = document.getElementById("updateUserContainer");
+    const updateUserForm = document.getElementById("updateUserForm");
 
     const userList = document.getElementById("userList");
     const eventList = document.getElementById("eventList");
@@ -143,6 +145,69 @@ document.addEventListener("DOMContentLoaded", () => {
         
         return listItem;
     };
+    const updateUser = (userId) => {
+        // Fetch the user's data and populate the update form
+        fetch(`/users/${userId}`)
+            .then((response) => response.json())
+            .then((user) => {
+                // Populate the update form fields with user data
+                document.getElementById("updateUserId").value = user.user_id;
+                document.getElementById("updateFirstName").value = user.first_name;
+                document.getElementById("updateLastName").value = user.last_name;
+                document.getElementById("updateEmail").value = user.email;
+                document.getElementById("updatePhoneNumber").value = user.phone_number;
+                document.getElementById("updateBirthdate").value = user.birthdate;
+                
+                // Show the update form
+                updateUserContainer.style.display = "block";
+            })
+            .catch((error) => {
+                console.error("Error fetching user data:", error);
+            });
+    };
 
+    // Add event listener for updating a user when "Update" button is clicked
+    const updateButtons = document.querySelectorAll(".updateUserButton");
+    updateButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+            const userId = button.getAttribute("data-user-id");
+            updateUser(userId);
+        });
+    });
+
+    updateUserForm.addEventListener("submit", async (e) => {
+        e.preventDefault(); // Prevent default form submission behavior
+
+        try {
+            const formData = new FormData(updateUserForm);
+            const userId = formData.get("updateUserId");
+            
+            const response = await fetch(`/users/${userId}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    first_name: formData.get("updateFirstName"),
+                    last_name: formData.get("updateLastName"),
+                    email: formData.get("updateEmail"),
+                    phone_number: formData.get("updatePhoneNumber"),
+                    birthdate: formData.get("updateBirthdate"),
+                }),
+            });
+
+            if (response.status === 200) {
+                console.log("User updated successfully!");
+                updateUserContainer.style.display = "none"; // Hide the update form
+                updateUserForm.reset(); // Clear the form
+                fetchUsers(); // Refresh user list
+            } else {
+                const data = await response.json();
+                console.error("Error updating user:", data.error);
+            }
+        } catch (error) {
+            console.error("An error occurred:", error);
+        }
+    });
     
 });
