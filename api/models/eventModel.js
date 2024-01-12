@@ -1,3 +1,4 @@
+const pool = require('../../dbConfig'); 
 
 const Event = {
   createEvent: async (pool, event) => {

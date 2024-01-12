@@ -1,4 +1,5 @@
-// user.js
+const pool = require('../../dbConfig'); 
+
 const User = {
   createUser: async (pool, user) => {
     try {
