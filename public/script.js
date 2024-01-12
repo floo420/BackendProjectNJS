@@ -162,7 +162,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     event_location: "Updated Event Location",
                     event_description: "Updated Event Description",
                 };
-    
+        
                 // Send a PUT request to your API with the updated data
                 return fetch(`/events/${eventId}`, {
                     method: "PUT",
@@ -187,6 +187,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 console.error("An error occurred:", error);
             });
     };
+    
     
 
 });
