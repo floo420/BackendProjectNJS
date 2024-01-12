@@ -46,8 +46,8 @@
     <h2>User List</h2>
     <ul id="userList"></ul>
 
-    <h2>Update User</h2>
     <div id="updateUserContainer" style="display: none;">
+        <h2>Update User</h2>
     <form id="updateUserForm">
         <input type="hidden" id="updateUserId" name="updateUserId">
         <label for="updateFirstName">First Name:</label>
@@ -72,6 +72,24 @@
     <!-- Event List -->
     <h2>Event List</h2>
     <ul id="eventList"></ul>
+
+    <div id="updateEventContainer" style="display: none;">
+        <h2>Update Event</h2>
+        <form id="updateEventForm">
+          <input type="hidden" id="updateEventId" name="updateEventId">
+          <label for="updateEventName">Event Name:</label>
+          <input type="text" id="updateEventName" name="updateEventName" required>
+          <label for="updateEventDate">Event Date:</label>
+          <input type="date" id="updateEventDate" name="updateEventDate" required>
+          <label for="updateEventLocation">Event Location:</label>
+          <input type="text" id="updateEventLocation" name="updateEventLocation" required>
+          <label for="updateEventDescription">Event Description:</label>
+          <textarea id="updateEventDescription" name="updateEventDescription" required></textarea>
+          <button type="submit">Update Event</button>
+        </form>
+      </div>
+      
+
     <script src="script.js"></script>
 </body>
 </html>

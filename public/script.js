@@ -3,8 +3,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const createEventForm = document.getElementById("createEventForm");
     const getAllUsersButton = document.getElementById("getAllUsersButton");
     const getAllEventsButton = document.getElementById("getAllEventsButton");
+
     const updateUserContainer = document.getElementById("updateUserContainer");
     const updateUserForm = document.getElementById("updateUserForm");
+    const updateEventForm = document.getElementById("updateEventForm");
+    const updateEventContainer = document.getElementById("updateEventContainer");
 
     const userList = document.getElementById("userList");
     const eventList = document.getElementById("eventList");
@@ -209,5 +212,34 @@ document.addEventListener("DOMContentLoaded", () => {
             console.error("An error occurred:", error);
         }
     });
+
+    const updateEvent = (eventId) => {
+        // Fetch the event's data and populate the update form
+        fetch(`/events/${eventId}`)
+          .then((response) => response.json())
+          .then((event) => {
+            // Populate the update form fields with event data
+            document.getElementById("updateEventId").value = event.event_id;
+            document.getElementById("updateEventName").value = event.event_name;
+            document.getElementById("updateEventDate").value = event.event_date;
+            document.getElementById("updateEventLocation").value = event.event_location;
+            document.getElementById("updateEventDescription").value = event.event_description;
+      
+            // Show the update form
+            updateEventContainer.style.display = "block";
+          })
+          .catch((error) => {
+            console.error("Error fetching event data:", error);
+          });
+      };
+      
+      // Add event listener for updating an event when "Update" button is clicked
+      const updateEventButtons = document.querySelectorAll(".updateEventButton");
+      updateEventButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const eventId = button.getAttribute("data-event-id");
+          updateEvent(eventId);
+        });
+      });
     
 });
