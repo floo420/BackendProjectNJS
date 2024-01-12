@@ -29,7 +29,25 @@ const Event = {
       throw error;
     }
   },
-  // Add other methods for updating, deleting, and querying events
+
+  updateEvent: async (pool, eventId, eventData) => {
+    try {
+      await pool.query(
+        'UPDATE events SET event_name = ?, event_date = ?, event_location = ?, event_description = ? WHERE event_id = ?',
+        [
+          eventData.event_name,
+          eventData.event_date,
+          eventData.event_location,
+          eventData.event_description,
+          eventId,
+        ]
+      );
+      return eventId;
+    } catch (error) {
+      throw error;
+    }
+  }
+
 };
 
 module.exports = Event;

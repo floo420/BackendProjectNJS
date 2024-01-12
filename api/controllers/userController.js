@@ -47,6 +47,7 @@ exports.deleteUser = async (req, res) => {
 // Get a list of all users
 exports.getAllUsers = async (req, res) => {
   try {
+    console.log(pool); // Add this line to check if pool is defined
     const users = await User.getAllUsers(pool);
     res.status(200).json(users);
   } catch (err) {
