@@ -144,4 +144,49 @@ document.addEventListener("DOMContentLoaded", () => {
         return listItem;
     };
 
+    const updateEvent = (eventId) => {
+        // Fetch the event data to be updated
+        fetch(`/events/${eventId}`)
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("Failed to fetch event data");
+                }
+                return response.json();
+            })
+            .then((eventData) => {
+                // Prompt the user for updated event information or use a form
+                const updatedEventData = {
+                    // Update event properties as needed
+                    event_name: "Updated Event Name",
+                    event_date: "Updated Event Date",
+                    event_location: "Updated Event Location",
+                    event_description: "Updated Event Description",
+                };
+    
+                // Send a PUT request to your API with the updated data
+                return fetch(`/events/${eventId}`, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(updatedEventData),
+                });
+            })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("Failed to update event");
+                }
+                return response.json();
+            })
+            .then((updatedEvent) => {
+                // Update the event in the UI with the updated data
+                // You can update the event item in your event list using JavaScript DOM manipulation
+                console.log("Event updated successfully:", updatedEvent);
+            })
+            .catch((error) => {
+                console.error("An error occurred:", error);
+            });
+    };
+    
+
 });
