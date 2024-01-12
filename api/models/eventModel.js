@@ -32,21 +32,36 @@ const Event = {
 
   updateEvent: async (pool, eventId, eventData) => {
     try {
-      await pool.query(
-        'UPDATE events SET event_name = ?, event_date = ?, event_location = ?, event_description = ? WHERE event_id = ?',
-        [
-          eventData.event_name,
-          eventData.event_date,
-          eventData.event_location,
-          eventData.event_description,
-          eventId,
-        ]
-      );
-      return eventId;
+      const {
+        event_name,
+        event_date,
+        event_location,
+        event_description,
+      } = eventData;
+
+      const query = `
+        UPDATE events
+        SET
+          event_name = ?,
+          event_date = ?,
+          event_location = ?,
+          event_description = ?
+        WHERE event_id = ?
+      `;
+
+      await pool.query(query, [
+        event_name,
+        event_date,
+        event_location,
+        event_description,
+        eventId,
+      ]);
+
+      return eventId; // Return the ID of the updated event
     } catch (error) {
       throw error;
     }
-  }
+  },
 
 };
 
