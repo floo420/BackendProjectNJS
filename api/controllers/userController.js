@@ -76,7 +76,8 @@ exports.getUserById = async (req, res) => {
     }
     res.status(200).json(user);
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    console.error(err); // Log the error for debugging
+    res.status(500).json({ error: 'Internal server error' }); // Handle the error gracefully
   }
 };
 

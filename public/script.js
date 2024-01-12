@@ -76,7 +76,6 @@ document.addEventListener("DOMContentLoaded", () => {
             const response = await fetch("/users");
             const users = await response.json();
             console.log("Fetched users:", users); // Add this line to debug
-
             userList.innerHTML = "";
             users.forEach((user) => {
                 const listItem = createUserListItem(user);
