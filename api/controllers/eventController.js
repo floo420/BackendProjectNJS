@@ -34,11 +34,11 @@ exports.updateEvent = async (req, res) => {
 exports.deleteEvent = async (req, res) => {
   const { eventId } = req.params;
   try {
-    const event = await Event.findByPk(eventId);
+    const event = await Event.getEventById(pool, eventId);
     if (!event) {
       return res.status(404).json({ error: 'Event not found' });
     }
-    await event.deleteEvent();
+    await Event.deleteEvent(pool, eventId); // Delete the event
     res.status(204).send();
   } catch (err) {
     res.status(400).json({ error: err.message });
