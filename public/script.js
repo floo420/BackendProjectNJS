@@ -12,6 +12,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const userList = document.getElementById("userList");
     const eventList = document.getElementById("eventList");
 
+    const deleteUserButton = document.querySelectorAll(".deleteUserButton");
+    const deleteEventButton = document.querySelectorAll(".deleteEventButton");
+
     createUserForm.addEventListener("submit", async (e) => {
         e.preventDefault(); // Prevent default form submission behavior
 
@@ -292,8 +295,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
     
     // Add event listener for deleting a user when "Delete" button is clicked
-    const deleteButtons = document.querySelectorAll(".deleteUserButton");
-    deleteButtons.forEach((button) => {
+    deleteUserButton.forEach((button) => {
         button.addEventListener("click", () => {
             const userId = button.getAttribute("data-user-id");
             deleteUser(userId);
@@ -301,8 +303,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     
     // Add event listener for deleting an event when "Delete" button is clicked
-    const deleteEventButtons = document.querySelectorAll(".deleteEventButton");
-    deleteEventButtons.forEach((button) => {
+    deleteEventButton.forEach((button) => {
         button.addEventListener("click", () => {
             const eventId = button.getAttribute("data-event-id");
             deleteEvent(eventId);

@@ -62,7 +62,17 @@ const Event = {
       throw error;
     }
   },
-  
+
+  deleteEvent: async (pool, eventId) => {
+    try {
+      const [results] = await pool.query('DELETE FROM events WHERE event_id = ?', [eventId]);
+      return results.affectedRows > 0; // Return true if a row was affected (event deleted)
+
+    } catch (error) {
+      throw error;
+    }
+  },
+
   findByPk: async (eventId) => {
     try {
       const [results] = await pool.query('SELECT * FROM events WHERE event_id = ?', [eventId]);

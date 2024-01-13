@@ -52,6 +52,14 @@ const User = {
     }
   },
 
+  deleteUser: async (pool, userId) => {
+    try {
+      await pool.query('DELETE FROM users WHERE user_id = ?', [userId]);
+    } catch (error) {
+      throw error;
+    }
+  },
+
 };
 
 module.exports = User;
