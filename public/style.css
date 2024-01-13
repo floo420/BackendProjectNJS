@@ -8,10 +8,13 @@ body {
 
 h1 {
     color: #333;
+    margin-bottom: 20px; /* Added margin for spacing */
 }
 
 h2 {
     color: #555;
+    clear: both; /* Clear floats to ensure the heading is below the forms */
+    margin-top: 20px; /* Added margin for spacing */
 }
 
 /* Style form labels and inputs */
@@ -21,6 +24,18 @@ form {
     border: 1px solid #ddd;
     border-radius: 5px;
     margin-bottom: 20px;
+    width: 48%;
+    float: left; /* Float forms next to each other */
+    box-sizing: border-box; /* Include padding and border in width */
+}
+
+/* Adjust spacing between forms */
+#createUserForm {
+    margin-right: 4%; /* Added margin between forms */
+}
+
+#createEventForm {
+    margin-right: 0; /* Ensure no margin on the right side for the second form */
 }
 
 label {
@@ -69,36 +84,27 @@ ul li {
     border-radius: 5px;
 }
 
-/* Show update form when updating user or event */
+/* Style update form inputs and buttons */
 #updateUserContainer,
-#updateEventContainer {
-    display: block;
-    background-color: #fff;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    margin-top: 20px;
+#updateEventContainer,
+#updateUserForm,
+#updateEventForm {
+    display: none; /* Hide update forms by default */
 }
 
-/* Style update form inputs */
-#updateUserForm input[type="hidden"] {
-    display: block;
-}
-
-/* Style update form buttons */
-#updateUserForm button[type="submit"],
-#updateEventForm button[type="submit"] {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    margin-top: 10px;
-}
-
-#updateUserForm button[type="submit"]:hover,
-#updateEventForm button[type="submit"]:hover {
-    background-color: #0056b3;
-}
+/* Responsive adjustments */
+@media (max-width
+: 768px) {
+    /* Stack forms and user/event list on top of each other on smaller screens /
+    form {
+    width: 100%; / Full width on smaller screens /
+    float: none; / Remove float from forms /
+    margin-right: 0; / Remove margin between forms */
+    }
+    
+    css
+    Copy code
+    /* Adjust heading alignment for smaller screens */
+    h1, h2 {
+        text-align: center;
+    }

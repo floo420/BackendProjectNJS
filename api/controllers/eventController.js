@@ -16,6 +16,7 @@ exports.createEvent = async (req, res) => {
 // Update an existing event
 exports.updateEvent = async (req, res) => {
   const { eventId } = req.params;
+  console.log('Event ID:', eventId);
   try {
     const event = await Event.getEventById(pool, eventId);
     if (!event) {
