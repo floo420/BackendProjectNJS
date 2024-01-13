@@ -62,6 +62,15 @@ const Event = {
       throw error;
     }
   },
+  
+  findByPk: async (eventId) => {
+    try {
+      const [results] = await pool.query('SELECT * FROM events WHERE event_id = ?', [eventId]);
+      return results[0]; // Return the event data or null if not found
+    } catch (error) {
+      throw error;
+    }
+  },
 
 };
 

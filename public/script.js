@@ -229,6 +229,7 @@ document.addEventListener("DOMContentLoaded", () => {
         fetch(`/events/${eventId}`)
           .then((response) => response.json())
           .then((event) => {
+            console.log("Fetched event:", event);
             // Populate the update form fields with event data
             document.getElementById("updateEventId").value = event.event_id;
             document.getElementById("updateEventName").value = event.event_name;
