@@ -141,10 +141,12 @@ document.addEventListener("DOMContentLoaded", () => {
         // Buttons for updating and deleting the event
         const updateEventButton = document.createElement("button");
         updateEventButton.textContent = "Update";
-        
+        updateEventButton.classList.add("updateEventButton");  
+
         updateEventButton.setAttribute("data-event-id", event.event_id);
 
         updateEventButton.addEventListener("click", () => {
+            console.log(event.event_id);
             updateEvent(event.event_id);
             updateEventForm.style.display = "block"; 
         });
@@ -250,39 +252,5 @@ document.addEventListener("DOMContentLoaded", () => {
           updateEvent(eventId);
         });
       });
-
-      updateEventForm.addEventListener("submit", async (e) => {
-        e.preventDefault(); // Prevent default form submission behavior
-
-        try {
-            const formData = new FormData(updateEventForm);
-            const eventId = formData.get("updateEventId");
-            
-            const response = await fetch(`/events/${eventId}`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    event_name: formData.get("updateEventName"),
-                    event_date: formData.get("updateEventDate"),
-                    event_location: formData.get("updateEventLocation"),
-                    event_description: formData.get("updateEventDescription"),
-                }),
-            });
-
-            if (response.status === 200) {
-                console.log("Event updated successfully!");
-                updateEventContainer.style.display = "none"; 
-                updateEventForm.reset(); // Clear the form
-                fetchEvents(); 
-            } else {
-                const data = await response.json();
-                console.error("Error updating event:", data.error);
-            }
-        } catch (error) {
-            console.error("An error occurred:", error);
-        }
-    });
     
 });
