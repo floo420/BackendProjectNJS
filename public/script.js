@@ -253,5 +253,61 @@ document.addEventListener("DOMContentLoaded", () => {
           updateEvent(eventId);
         });
       });
+
+      const deleteUser = async (userId) => {
+        try {
+            const response = await fetch(`/users/${userId}`, {
+                method: "DELETE",
+            });
+    
+            if (response.status === 204) {
+                console.log("User deleted successfully!");
+                fetchUsers(); // Refresh user list
+            } else {
+                const data = await response.json();
+                console.error("Error deleting user:", data.error);
+            }
+        } catch (error) {
+            console.error("An error occurred:", error);
+        }
+    };
+    
+    // Function to delete an event by ID
+    const deleteEvent = async (eventId) => {
+        try {
+            const response = await fetch(`/events/${eventId}`, {
+                method: "DELETE",
+            });
+    
+            if (response.status === 204) {
+                console.log("Event deleted successfully!");
+                fetchEvents(); // Refresh event list
+            } else {
+                const data = await response.json();
+                console.error("Error deleting event:", data.error);
+            }
+        } catch (error) {
+            console.error("An error occurred:", error);
+        }
+    };
+    
+    // Add event listener for deleting a user when "Delete" button is clicked
+    const deleteButtons = document.querySelectorAll(".deleteUserButton");
+    deleteButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+            const userId = button.getAttribute("data-user-id");
+            deleteUser(userId);
+        });
+    });
+    
+    // Add event listener for deleting an event when "Delete" button is clicked
+    const deleteEventButtons = document.querySelectorAll(".deleteEventButton");
+    deleteEventButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+            const eventId = button.getAttribute("data-event-id");
+            deleteEvent(eventId);
+        });
+    });
+    
     
 });
